@@ -1,0 +1,53 @@
+/* Sonic Fence v4 - Working Progress.
+Event details:
+SJEC Mangalore | Hack to Future - Hackathon
+Domain - Social Innovations
+*/
+
+#define trig1 2
+#define echo1 3
+#define trig2 4
+#define echo2 5
+#define buzzer 6
+
+void setup() {
+  pinMode(trig1, OUTPUT);
+  pinMode(echo1, INPUT);
+  pinMode(trig2, OUTPUT);
+  pinMode(echo2, INPUT);
+  pinMode(buzzer, OUTPUT);
+}
+
+void loop() {
+  long duration1, distance1, duration2, distance2;
+  digitalWrite(trig1, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trig1, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trig1, LOW);
+  duration1 = pulseIn(echo1, HIGH);
+  distance1 = duration1 * 0.034 / 2;
+  if (distance1 < 100 && distance1 > 0) {
+    digitalWrite(buzzer, HIGH);
+    while (distance1 < 100 && distance1 > 0) {
+      duration1 = pulseIn(echo1, HIGH);
+      distance1 = duration1 * 0.034 / 2;
+    }
+    digitalWrite(buzzer, LOW);
+  }
+  digitalWrite(trig2, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trig2, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trig2, LOW);
+  duration2 = pulseIn(echo2, HIGH);
+  distance2 = duration2 * 0.034 / 2;
+  if (distance2 < 100 && distance2 > 0) {
+    digitalWrite(buzzer, HIGH);
+    while (distance2 < 100 && distance2 > 0) {
+      duration2 = pulseIn(echo2, HIGH);
+      distance2 = duration2 * 0.034 / 2;
+    }
+    digitalWrite(buzzer, LOW);
+  }
+}
