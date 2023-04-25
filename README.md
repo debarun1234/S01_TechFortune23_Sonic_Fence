@@ -30,3 +30,15 @@ The Sonic Fence is a social innovation that uses ultrasound sensors to detect tr
 
 ## Libraries Used
 SoftwareSerial.h file used to enable _GSM Module_ to function, every other commponents will work from the predefined libraries given to **Arduino IDE**.
+
+## Team Prospects
+* Leader and Software - Debarun Ghosh
+* Hardware Engineer - Ayan Kumar Mal
+* Technical Documentation - Pooja Mallik
+
+## Event Prospects
+* HackToFuture - Hackathon
+* St. Joseph Engineering College, Mangalore
+* Domain - Social Innovations
+
+**ANY QUERIES PLEASE REACH US TO debarun.ghosh.2000@gmail.com**
