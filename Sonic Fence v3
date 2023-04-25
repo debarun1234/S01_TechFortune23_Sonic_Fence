@@ -1,0 +1,86 @@
+/* Sonic Fence v1.
+Event details:
+SJEC Mangalore | Hack to Future - Hackathon
+Domain - Social Innovations
+*/
+
+#include <SoftwareSerial.h>
+#include <TinyGsmClient.h>
+
+
+#define SONIC_TRIG_PIN 12
+#define SONIC_ECHO_PIN 13
+#define MAX_DISTANCE 50
+#define SPEAKER_PIN 11
+
+#define MQTT_SERVER "mqtt-dashboard.com"
+#define MQTT_PORT 1883
+#define MQTT_USERNAME "your_username"
+#define MQTT_PASSWORD "your_password"
+#define MQTT_TOPIC "sonic_fence/distance"
+
+#define GSM_RX 7
+#define GSM_TX 8
+
+SoftwareSerial gsmSerial(GSM_TX, GSM_RX);
+TinyGsm modem(gsmSerial);
+TinyGsmClient client(modem);
+PubSubClient mqtt(client);
+
+int buzzerPin = SPEAKER_PIN;
+
+void setup() {
+  Serial.begin(9600);
+  gsmSerial.begin(9600);
+
+  pinMode(SONIC_TRIG_PIN, OUTPUT);
+  pinMode(SONIC_ECHO_PIN, INPUT);
+  pinMode(buzzerPin, OUTPUT);
+
+  noTone(buzzerPin);
+
+  if (!modem.restart()) {
+    Serial.println("Failed to restart modem.");
+    while (1);
+  }
+
+  if (!modem.waitForNetwork()) {
+    Serial.println("Failed to connect to network.");
+    while (1);
+  }
+
+  if (!modem.gprsConnect("your_apn", "your_username", "your_password")) {
+    Serial.println("Failed to connect to GPRS.");
+    while (1);
+  }
+
+  mqtt.setServer(MQTT_SERVER, MQTT_PORT);
+  mqtt.setCredentials(MQTT_USERNAME, MQTT_PASSWORD);
+
+  if (!mqtt.connect("arduino-client")) {
+    Serial.println("Failed to connect to MQTT broker.");
+    while (1);
+  }
+}
+
+void loop() {
+  unsigned long duration, distance;
+  digitalWrite(SONIC_TRIG_PIN, LOW);
+  delayMicroseconds(2);
+  digitalWrite(SONIC_TRIG_PIN, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(SONIC_TRIG_PIN, LOW);
+  duration = pulseIn(SONIC_ECHO_PIN, HIGH);
+  distance = duration / 58;
+  if (distance < MAX_DISTANCE) {
+    char payload[10];
+    snprintf(payload, sizeof(payload), "%lu", distance);
+    mqtt.publish(MQTT_TOPIC, payload);
+    Serial.println("Data sent to MQTT broker.");
+
+    tone(buzzerPin, 3000, 5000); // Make the speaker beep for 5 seconds
+    delay(5000);
+    noTone(buzzerPin); // Stop the speaker from beeping
+  }
+  mqtt.loop();
+}
