@@ -6,17 +6,18 @@ Domain - Social Innovations
 
 #include <SoftwareSerial.h>
 #include <TinyGsmClient.h>
+#include <PubSubClient.h>
 
 
-#define SONIC_TRIG_PIN 12
-#define SONIC_ECHO_PIN 13
-#define MAX_DISTANCE 50
-#define SPEAKER_PIN 11
+#define SONIC_TRIG_PIN 12  //ultrasound 1
+#define SONIC_ECHO_PIN 13 //ultrasound 1
+#define MAX_DISTANCE 50 
+#define SPEAKER_PIN 11 //buzzer
 
 #define MQTT_SERVER "mqtt-dashboard.com"
-#define MQTT_PORT 1883
-#define MQTT_USERNAME "your_username"
-#define MQTT_PASSWORD "your_password"
+#define MQTT_PORT 8884
+#define MQTT_USERNAME "debarung"
+#define MQTT_PASSWORD "Rick0607@#"
 #define MQTT_TOPIC "sonic_fence/distance"
 
 #define GSM_RX 7
@@ -49,7 +50,7 @@ void setup() {
     while (1);
   }
 
-  if (!modem.gprsConnect("your_apn", "your_username", "your_password")) {
+  if (!modem.gprsConnect("airtelgprs.com", "", "")) {
     Serial.println("Failed to connect to GPRS.");
     while (1);
   }
