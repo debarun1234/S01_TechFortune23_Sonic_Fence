@@ -12,7 +12,21 @@ The Sonic Fence is a social innovation that uses ultrasound sensors to detect tr
 ## Hardware and Software
 * Hardware
   * Arduino Nano
+  * HC-SR04 Ultrasound (x2)
+  * GSM SIM 800L Module
+  * Buzzer
+  * LED
+  * Mini Breadboard
+  * Wires
+* Software
+  * Arduino IDE
 
+## Working Procedure
+* The Sonic Fence project uses two HC-SR04 ultrasound sensors to detect trains and animals.
+* When a train is detected, the Arduino triggers the Piezo buzzer to emit a high-pitched sound, which helps to scare away animals from the tracks.
+* Once the train has passed, the sound stops.
+* The second ultrasound sensor is used to detect the presence of animals on the tracks.
+* In case of detection, the Piezo buzzer is triggered to scare off the animal and keep the tracks clear.
 
-
-
+## Libraries Used
+SoftwareSerial.h file used to enable _GSM Module_ to function, every other commponents will work from the predefined libraries given to **Arduino IDE**.
