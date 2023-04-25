@@ -11,8 +11,8 @@ The Sonic Fence is a social innovation that uses ultrasound sensors to detect tr
 
 ## Hardware and Software
 * Hardware
-
-
+** Arduino Nano
+** 
 
 
 
