@@ -4,4 +4,32 @@ SJEC Mangalore | Hack to Future - Hackathon
 Domain - Social Innovations
 */
 
-#Title
+#define trig 2   //ultrasound for train detection
+#define echo 3
+#define buzzer 4
+
+void setup() {
+  pinMode(trig, OUTPUT);
+  pinMode(echo, INPUT);     //Takes in the input from the ultrasound to detect train incoming and outgoing.
+  pinMode(buzzer, OUTPUT);
+}
+
+/* the code gives the calculations on the sensor to trigger basedd on the bounce signal recieved from the object
+void loop() {
+  long duration, distance;
+  digitalWrite(trig, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trig, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trig, LOW);
+  duration = pulseIn(echo, HIGH);
+  distance = duration * 0.034 / 2;
+  if (distance < 20 && distance > 0) {
+    digitalWrite(buzzer, HIGH);
+    while (distance < 20 && distance > 0) {
+      duration = pulseIn(echo, HIGH);
+      distance = duration * 0.034 / 2;
+    }
+    digitalWrite(buzzer, LOW);
+  }
+}
